@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111318">
+  <meta name="description" content="Интерактивные расследования, тайные архивы и истории, в которых каждая улика имеет значение.">
+  <title>Mystery Club — интерактивные расследования</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Mystery Club — главная">
+      <span class="brand-mark">M<span>·</span></span>
+      <span class="brand-name">MYSTERY<span>CLUB</span></span>
+    </a>
+    <nav class="nav">
+      <a class="active" href="#cases">Расследования</a>
+      <a href="#about">О проекте</a>
+    </nav>
+    <a class="top-link" href="#cases">Открыть архив <span>↗</span></a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="live-dot"></span> НЕРАСКРЫТЫЕ ДЕЛА · АРХИВ ОТКРЫТ</div>
+        <h1>У каждой тайны<br>есть <em>своя история.</em></h1>
+        <p class="hero-text">Изучайте документы, сопоставляйте свидетельства и находите то, что кто-то очень хотел скрыть.</p>
+        <a class="primary-button" href="#cases">Выбрать расследование <span>→</span></a>
+      </div>
+      <div class="hero-art" aria-label="Иллюстрация старого архивного дела">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="file-card">
+          <div class="file-top"><span>ARCHIVE DIVISION</span><span>№ 001</span></div>
+          <div class="file-stamp">CLASSIFIED</div>
+          <div class="file-symbol">✳</div>
+          <div class="file-lines"><i></i><i></i><i></i></div>
+          <div class="file-bottom"><span>CASE FILE</span><span>EST. 1908</span></div>
+        </div>
+        <span class="art-note note-a">ДОСТУП РАЗРЕШЁН</span>
+        <span class="art-note note-b">АРХИВ · 01</span>
+      </div>
+      <div class="hero-index"><span>MC / 001</span><span>ИССЛЕДУЙТЕ. СОМНЕВАЙТЕСЬ. РАСКРЫВАЙТЕ.</span></div>
+    </section>
+
+    <section class="cases-section" id="cases">
+      <div class="section-heading">
+        <div><div class="eyebrow">КОЛЛЕКЦИЯ РАССЛЕДОВАНИЙ</div><h2>Открытые дела<span class="muted">.</span></h2></div>
+        <div class="case-count"><span>01</span> /  коллекция пополняется</div>
+      </div>
+      <article class="case-card featured">
+        <div class="case-visual">
+          <div class="case-number">ДЕЛО № 001</div>
+          <div class="case-seal">V</div>
+          <div class="case-visual-caption">THE VALE<br>ARCHIVES</div>
+          <div class="case-date">14.10.2018 — 03.11.1931</div>
+        </div>
+        <div class="case-info">
+          <div class="case-meta"><span class="tag">ДЕТЕКТИВ</span><span class="tag">ТАЙНОЕ ОБЩЕСТВО</span><span class="difficulty">СЛОЖНОСТЬ · СРЕДНЯЯ</span></div>
+          <h3>Архив Вейл</h3>
+          <p>Из закрытого архива исчез оригинал документа А-17. След ведёт к семье Вейл, старой коллекции и организации, о которой не должно было остаться никаких записей.</p>
+          <div class="case-bottom"><span class="duration">◷ Около 90–120 минут</span><a class="text-button" href="cases/vale-archive/">Открыть дело <span>↗</span></a></div>
+        </div>
+      </article>
+      <div class="coming-card">
+        <span class="coming-icon">＋</span>
+        <div><strong>Следующее дело готовится</strong><p>Новые истории будут появляться в архиве регулярно.</p></div>
+        <span class="coming-label">В РАЗРАБОТКЕ</span>
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="eyebrow">КАК ЭТО РАБОТАЕТ</div>
+      <h2>Здесь недостаточно<br><em>просто читать.</em></h2>
+      <div class="steps">
+        <div class="step"><span>01</span><h3>Изучайте</h3><p>Письма, архивные записи, аудио и видеосвидетельства.</p></div>
+        <div class="step"><span>02</span><h3>Сопоставляйте</h3><p>Ищите противоречия, проверяйте версии и связывайте факты.</p></div>
+        <div class="step"><span>03</span><h3>Раскрывайте</h3><p>Соберите доказательства и представьте собственное заключение.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark">M<span>·</span></span><span class="brand-name">MYSTERY<span>CLUB</span></span></a><span>АРХИВ ИНТЕРАКТИВНЫХ РАССЛЕДОВАНИЙ</span><span>© 2026</span></footer>
+  <script src="script.js"></script>
+</body>
+</html>
