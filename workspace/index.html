@@ -31,7 +31,7 @@ footer{border-top:1px solid #292c33;padding:24px 7%;color:#686b72;font:8px 'DM M
 </style>
 </head>
 <body>
-<header class="top"><a class="brand" href="../"><span class="mark">M</span><span class="brand-name">MYSTERY<span>CLUB</span></span></a><a class="back" href="../">← Вернуться в архив</a></header>
+<header class="top"><a class="brand" href="../"><span class="mark">M</span><span class="brand-name">MYSTERY<span>CLUB</span></span></a><a class="back" id="backToArchive" href="../" hidden>← Вернуться в архив</a></header>
 <main>
 <div class="eyebrow">ЛИЧНОЕ ПРОСТРАНСТВО · MC / WORKSPACE</div>
 <h1>Мой кабинет<span style="color:var(--gold)">.</span></h1>
@@ -135,6 +135,7 @@ function renderQuests() {
   });
 }
 function showAuthState() {
+  $('backToArchive').hidden = !session;
   $('authForm').hidden = !!session;
   $('authActions').hidden = !!session;
   $('signedIn').hidden = !session;
