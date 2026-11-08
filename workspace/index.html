@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111318">
+<title>Мой кабинет — Mystery Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#111318;--panel:#191c23;--panel2:#20242d;--text:#eee9df;--muted:#999ba1;--gold:#c5a875;--line:#343741;--serif:Georgia,'Times New Roman',serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Manrope,Arial,sans-serif}
+.top{height:76px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #292c33}
+.brand{display:flex;gap:10px;align-items:center;color:var(--text);text-decoration:none}.mark{width:37px;height:37px;border:1px solid #766448;color:var(--gold);display:grid;place-items:center;font:27px Georgia}.brand-name{font-size:11px;font-weight:800;letter-spacing:2px}.brand-name span{color:var(--gold);margin-left:4px}
+.back{font-size:10px;color:var(--gold);text-decoration:none;border-bottom:1px solid #766448;padding-bottom:7px}
+main{max-width:1120px;margin:auto;padding:55px 28px 90px}.eyebrow{font:10px 'DM Mono',monospace;letter-spacing:2px;color:var(--gold)}
+h1{font:clamp(38px,6vw,58px) Georgia,serif;font-weight:400;margin:15px 0 10px}.intro{color:var(--muted);font-size:13px;line-height:1.8;max-width:620px;margin-bottom:38px}
+.layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);padding:25px}.panel h2{font:25px Georgia,serif;font-weight:400;margin:0 0 20px}.profile-top{display:flex;gap:14px;align-items:center;margin-bottom:23px}.avatar{width:54px;height:54px;border-radius:50%;background:#3b352b;border:1px solid #8a7652;display:grid;place-items:center;color:var(--gold);font:22px Georgia}.profile-name{font-size:14px;font-weight:700}.profile-note{font-size:10px;color:var(--muted);margin-top:4px}
+label{display:block;font:9px 'DM Mono',monospace;letter-spacing:1.3px;color:#b5a27d;margin:16px 0 8px}
+input,textarea,select{width:100%;background:#111318;border:1px solid #3a3d45;color:var(--text);padding:13px 14px;font:12px Manrope,Arial;outline:none;border-radius:0}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}textarea{min-height:105px;resize:vertical}select{color-scheme:dark}
+button{border:0;cursor:pointer;font:700 10px Manrope,Arial;letter-spacing:.5px;padding:14px 17px}
+.primary{background:var(--gold);color:#171717}.secondary{background:transparent;border:1px solid #5d523f;color:var(--gold)}
+.full{width:100%;margin-top:17px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}.span2{grid-column:1/-1}
+.hint{font-size:10px;color:#858891;line-height:1.7;margin:12px 0 0}
+.status{min-height:18px;color:#c5a875;font-size:11px;margin-top:10px}
+.saved{margin-top:22px}.saved h2{margin-bottom:15px}.quest{border:1px solid #393c44;padding:16px;margin-top:10px;background:#15171d}.quest-head{display:flex;justify-content:space-between;gap:12px}.quest-title{font:20px Georgia,serif}.quest-meta{font:8px 'DM Mono';color:var(--gold);letter-spacing:1px;margin-top:8px}.quest-desc{font-size:11px;line-height:1.7;color:#a5a6aa;margin:12px 0}.delete{background:transparent;border:1px solid #5b4140;color:#c58f83;padding:7px 10px;font-size:9px;align-self:flex-start}.empty{border:1px dashed #41434a;padding:22px;color:#92949a;font-size:11px;line-height:1.8;text-align:center}
+footer{border-top:1px solid #292c33;padding:24px 7%;color:#686b72;font:8px 'DM Mono';letter-spacing:1.2px;display:flex;justify-content:space-between}
+@media(max-width:760px){.top{padding:0 6%;height:68px}main{padding:40px 6% 65px}.layout{grid-template-columns:1fr}.panel{padding:21px}.form-grid{grid-template-columns:1fr}.span2{grid-column:auto}footer{gap:10px;flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header class="top"><a class="brand" href="../"><span class="mark">M</span><span class="brand-name">MYSTERY<span>CLUB</span></span></a><a class="back" href="../">← Вернуться в архив</a></header>
+<main>
+<div class="eyebrow">ЛИЧНОЕ ПРОСТРАНСТВО · MC / WORKSPACE</div>
+<h1>Мой кабинет<span style="color:var(--gold)">.</span></h1>
+<p class="intro">Настройте свой профиль и создайте первое расследование. Здесь будут храниться ваши черновики и идеи для будущих историй.</p>
+<div class="layout">
+<section class="panel">
+<h2>Профиль</h2>
+<div class="profile-top"><div class="avatar" id="avatar">Г</div><div><div class="profile-name" id="profileDisplay">Гость архива</div><div class="profile-note">Создатель расследований</div></div></div>
+<form id="profileForm"><label for="displayName">ВАШЕ ИМЯ ИЛИ ПСЕВДОНИМ</label><input id="displayName" maxlength="32" placeholder="Например, Алекс" autocomplete="nickname"><button class="secondary full" type="submit">Сохранить профиль</button><div class="status" id="profileStatus" aria-live="polite"></div></form>
+<p class="hint">Пока профиль хранится только в этом браузере. Регистрация и вход с других устройств появятся после подключения сервера.</p>
+</section>
+<section class="panel">
+<h2>Новое расследование</h2>
+<form id="questForm">
+<div class="form-grid">
+<div class="span2"><label for="questTitle">НАЗВАНИЕ КВЕСТА *</label><input id="questTitle" maxlength="70" required placeholder="Например, Тайна старого маяка"></div>
+<div><label for="genre">ЖАНР</label><select id="genre"><option>Детектив</option><option>Мистика</option><option>Историческое расследование</option><option>Приключение</option><option>Триллер</option><option>Другое</option></select></div>
+<div><label for="difficulty">СЛОЖНОСТЬ</label><select id="difficulty"><option>Лёгкая</option><option selected>Средняя</option><option>Сложная</option></select></div>
+<div><label for="duration">ДЛИТЕЛЬНОСТЬ</label><select id="duration"><option>До 30 минут</option><option>30–60 минут</option><option selected>1–2 часа</option><option>2–3 часа</option><option>Более 3 часов</option></select></div>
+<div><label for="format">ФОРМАТ</label><select id="format"><option>Одиночный</option><option>Для компании</option><option>Командный</option></select></div>
+<div class="span2"><label for="description">КРАТКОЕ ОПИСАНИЕ</label><textarea id="description" maxlength="700" placeholder="О чём эта история? Что предстоит выяснить игрокам?"></textarea></div>
+</div>
+<button class="primary full" type="submit">Сохранить черновик <span>→</span></button><div class="status" id="questStatus" aria-live="polite"></div>
+</form>
+</section>
+</div>
+<section class="saved"><h2 style="font:28px Georgia,serif;font-weight:400">Мои черновики <span style="color:var(--gold)" id="questCount">· 0</span></h2><div id="questList"><div class="empty">Пока здесь пусто. Создайте свой первый квест — он появится в этом разделе.</div></div></section>
+</main>
+<footer><span>MYSTERY CLUB</span><span>КОНСТРУКТОР ИНТЕРАКТИВНЫХ РАССЛЕДОВАНИЙ</span><span>© 2026</span></footer>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const safeParse=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
+const profile=safeParse('mc_profile',{name:'Гость архива'});
+const quests=safeParse('mc_quests',[]);
+function initials(name){return (name.trim()[0]||'Г').toLocaleUpperCase('ru')}
+function renderProfile(){const name=profile.name||'Гость архива';$('profileDisplay').textContent=name;$('avatar').textContent=initials(name);$('displayName').value=name==='Гость архива'?'':name}
+function renderQuests(){
+$('questCount').textContent='· '+quests.length;
+const list=$('questList');
+if(!quests.length){list.innerHTML='<div class="empty">Пока здесь пусто. Создайте свой первый квест — он появится в этом разделе.</div>';return}
+list.replaceChildren();
+quests.forEach((q,index)=>{
+const card=document.createElement('article');card.className='quest';
+const head=document.createElement('div');head.className='quest-head';
+const title=document.createElement('div');title.className='quest-title';title.textContent=q.title;
+const del=document.createElement('button');del.className='delete';del.type='button';del.textContent='Удалить';del.addEventListener('click',()=>{quests.splice(index,1);localStorage.setItem('mc_quests',JSON.stringify(quests));renderQuests()});
+head.append(title,del);
+const meta=document.createElement('div');meta.className='quest-meta';meta.textContent=[q.genre,q.difficulty,q.duration,q.format].join(' · ');
+card.append(head,meta);
+if(q.description){const desc=document.createElement('p');desc.className='quest-desc';desc.textContent=q.description;card.append(desc)}
+list.append(card);
+});
+}
+$('profileForm').addEventListener('submit',e=>{e.preventDefault();const name=$('displayName').value.trim()||'Гость архива';profile.name=name;localStorage.setItem('mc_profile',JSON.stringify(profile));renderProfile();$('profileStatus').textContent='Профиль сохранён в этом браузере.'});
+$('questForm').addEventListener('submit',e=>{e.preventDefault();const title=$('questTitle').value.trim();if(!title)return;quests.unshift({title,genre:$('genre').value,difficulty:$('difficulty').value,duration:$('duration').value,format:$('format').value,description:$('description').value.trim(),createdAt:new Date().toISOString()});localStorage.setItem('mc_quests',JSON.stringify(quests));$('questForm').reset();$('questStatus').textContent='Черновик сохранён.';renderQuests()});
+renderProfile();renderQuests();
+})();
+</script>
+</body>
+</html>
