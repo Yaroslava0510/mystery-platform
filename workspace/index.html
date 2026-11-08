@@ -46,7 +46,7 @@ footer{border-top:1px solid #292c33;padding:24px 7%;color:#686b72;font:8px 'DM M
 <label for="authPassword">ПАРОЛЬ</label><input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="Не менее 8 символов">
 <button class="primary full" id="authSubmit" type="submit">Войти</button>
 </form>
-<div class="auth-actions"><button class="secondary" id="switchAuth" type="button">Создать аккаунт</button><button class="secondary" id="forgotPassword" type="button">Забыли пароль?</button></div>
+<div class="auth-actions" id="authActions"><button class="secondary" id="switchAuth" type="button">Создать аккаунт</button><button class="secondary" id="forgotPassword" type="button">Забыли пароль?</button></div>
 <div class="status" id="authStatus" aria-live="polite"></div>
 <div id="signedIn" hidden><p class="hint" id="signedInText"></p><button class="secondary" id="signOut" type="button">Выйти из аккаунта</button></div>
 <div id="passwordResetBox" hidden><label for="newPassword">НОВЫЙ ПАРОЛЬ</label><input id="newPassword" type="password" minlength="8" placeholder="Не менее 8 символов"><button class="primary full" id="saveNewPassword" type="button">Сохранить новый пароль</button></div>
@@ -231,9 +231,10 @@ $('saveNewPassword').addEventListener('click', async () => {
   $('authStatus').textContent = error ? 'Не удалось обновить пароль: ' + error.message : 'Пароль обновлён.';
   if (!error) $('passwordResetBox').hidden = true;
 });
-supabase.auth.onAuthStateChange(async (event, newSession) => {
+supabase.auth.onAuthStateChange((event, newSession) => {
   if (event === 'PASSWORD_RECOVERY') $('passwordResetBox').hidden = false;
-  if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') await applySession(newSession);
+  if (event === 'SIGNED_IN') { session = newSession; showAuthState(); void loadCloudData(); }
+  if (event === 'SIGNED_OUT') { session = null; showAuthState(); quests = localQuests; renderQuests(); }
 });
 $('profileForm').addEventListener('submit', async e => {
   e.preventDefault();
