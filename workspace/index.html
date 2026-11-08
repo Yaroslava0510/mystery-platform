@@ -16,7 +16,7 @@
 .back{font-size:10px;color:var(--gold);text-decoration:none;border-bottom:1px solid #766448;padding-bottom:7px}
 main{max-width:1120px;margin:auto;padding:55px 28px 90px}.eyebrow{font:10px 'DM Mono',monospace;letter-spacing:2px;color:var(--gold)}
 h1{font:clamp(38px,6vw,58px) Georgia,serif;font-weight:400;margin:15px 0 10px}.intro{color:var(--muted);font-size:13px;line-height:1.8;max-width:620px;margin-bottom:38px}
-.layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);padding:25px}.panel h2{font:25px Georgia,serif;font-weight:400;margin:0 0 20px}.profile-top{display:flex;gap:14px;align-items:center;margin-bottom:23px}.avatar{width:54px;height:54px;border-radius:50%;background:#3b352b;border:1px solid #8a7652;display:grid;place-items:center;color:var(--gold);font:22px Georgia}.profile-name{font-size:14px;font-weight:700}.profile-note{font-size:10px;color:var(--muted);margin-top:4px}
+.auth-panel{margin-bottom:20px}.auth-panel form{max-width:520px}.auth-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}.auth-actions button{margin-top:0}.layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}.panel{background:var(--panel);border:1px solid var(--line);padding:25px}.panel h2{font:25px Georgia,serif;font-weight:400;margin:0 0 20px}.profile-top{display:flex;gap:14px;align-items:center;margin-bottom:23px}.avatar{width:54px;height:54px;border-radius:50%;background:#3b352b;border:1px solid #8a7652;display:grid;place-items:center;color:var(--gold);font:22px Georgia}.profile-name{font-size:14px;font-weight:700}.profile-note{font-size:10px;color:var(--muted);margin-top:4px}
 label{display:block;font:9px 'DM Mono',monospace;letter-spacing:1.3px;color:#b5a27d;margin:16px 0 8px}
 input,textarea,select{width:100%;background:#111318;border:1px solid #3a3d45;color:var(--text);padding:13px 14px;font:12px Manrope,Arial;outline:none;border-radius:0}
 input:focus,textarea:focus,select:focus{border-color:var(--gold)}textarea{min-height:105px;resize:vertical}select{color-scheme:dark}
@@ -35,13 +35,28 @@ footer{border-top:1px solid #292c33;padding:24px 7%;color:#686b72;font:8px 'DM M
 <main>
 <div class="eyebrow">ЛИЧНОЕ ПРОСТРАНСТВО · MC / WORKSPACE</div>
 <h1>Мой кабинет<span style="color:var(--gold)">.</span></h1>
-<p class="intro">Настройте свой профиль и создайте первое расследование. Здесь будут храниться ваши черновики и идеи для будущих историй.</p>
+<p class="intro">Настройте свой профиль и создайте первое расследование. Войдите в аккаунт, чтобы хранить квесты в облаке и открывать их с разных устройств.</p>
+
+<section class="panel auth-panel" id="authPanel">
+<h2>Аккаунт Mystery Club</h2>
+<p class="hint" id="authIntro">Войдите или создайте аккаунт, чтобы хранить расследования в облаке.</p>
+<form id="authForm">
+<div id="nameField" hidden><label for="authName">ИМЯ ИЛИ ПСЕВДОНИМ</label><input id="authName" maxlength="32" autocomplete="nickname" placeholder="Например, Алекс"></div>
+<label for="authEmail">ЭЛЕКТРОННАЯ ПОЧТА</label><input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com">
+<label for="authPassword">ПАРОЛЬ</label><input id="authPassword" type="password" required minlength="8" autocomplete="current-password" placeholder="Не менее 8 символов">
+<button class="primary full" id="authSubmit" type="submit">Войти</button>
+</form>
+<div class="auth-actions"><button class="secondary" id="switchAuth" type="button">Создать аккаунт</button><button class="secondary" id="forgotPassword" type="button">Забыли пароль?</button></div>
+<div class="status" id="authStatus" aria-live="polite"></div>
+<div id="signedIn" hidden><p class="hint" id="signedInText"></p><button class="secondary" id="signOut" type="button">Выйти из аккаунта</button></div>
+<div id="passwordResetBox" hidden><label for="newPassword">НОВЫЙ ПАРОЛЬ</label><input id="newPassword" type="password" minlength="8" placeholder="Не менее 8 символов"><button class="primary full" id="saveNewPassword" type="button">Сохранить новый пароль</button></div>
+</section>
 <div class="layout">
 <section class="panel">
 <h2>Профиль</h2>
 <div class="profile-top"><div class="avatar" id="avatar">Г</div><div><div class="profile-name" id="profileDisplay">Гость архива</div><div class="profile-note">Создатель расследований</div></div></div>
 <form id="profileForm"><label for="displayName">ВАШЕ ИМЯ ИЛИ ПСЕВДОНИМ</label><input id="displayName" maxlength="32" placeholder="Например, Алекс" autocomplete="nickname"><button class="secondary full" type="submit">Сохранить профиль</button><div class="status" id="profileStatus" aria-live="polite"></div></form>
-<p class="hint">Пока профиль хранится только в этом браузере. Регистрация и вход с других устройств появятся после подключения сервера.</p>
+<p class="hint">После входа профиль будет синхронизироваться с облачной базой Mystery Club.</p>
 </section>
 <section class="panel">
 <h2>Новое расследование</h2>
@@ -61,35 +76,201 @@ footer{border-top:1px solid #292c33;padding:24px 7%;color:#686b72;font:8px 'DM M
 <section class="saved"><h2 style="font:28px Georgia,serif;font-weight:400">Мои черновики <span style="color:var(--gold)" id="questCount">· 0</span></h2><div id="questList"><div class="empty">Пока здесь пусто. Создайте свой первый квест — он появится в этом разделе.</div></div></section>
 </main>
 <footer><span>MYSTERY CLUB</span><span>КОНСТРУКТОР ИНТЕРАКТИВНЫХ РАССЛЕДОВАНИЙ</span><span>© 2026</span></footer>
-<script>
-(function(){
-const $=id=>document.getElementById(id);
-const safeParse=(key,fallback)=>{try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}};
-const profile=safeParse('mc_profile',{name:'Гость архива'});
-const quests=safeParse('mc_quests',[]);
-function initials(name){return (name.trim()[0]||'Г').toLocaleUpperCase('ru')}
-function renderProfile(){const name=profile.name||'Гость архива';$('profileDisplay').textContent=name;$('avatar').textContent=initials(name);$('displayName').value=name==='Гость архива'?'':name}
-function renderQuests(){
-$('questCount').textContent='· '+quests.length;
-const list=$('questList');
-if(!quests.length){list.innerHTML='<div class="empty">Пока здесь пусто. Создайте свой первый квест — он появится в этом разделе.</div>';return}
-list.replaceChildren();
-quests.forEach((q,index)=>{
-const card=document.createElement('article');card.className='quest';
-const head=document.createElement('div');head.className='quest-head';
-const title=document.createElement('div');title.className='quest-title';title.textContent=q.title;
-const del=document.createElement('button');del.className='delete';del.type='button';del.textContent='Удалить';del.addEventListener('click',()=>{quests.splice(index,1);localStorage.setItem('mc_quests',JSON.stringify(quests));renderQuests()});
-head.append(title,del);
-const meta=document.createElement('div');meta.className='quest-meta';meta.textContent=[q.genre,q.difficulty,q.duration,q.format].join(' · ');
-card.append(head,meta);
-if(q.description){const desc=document.createElement('p');desc.className='quest-desc';desc.textContent=q.description;card.append(desc)}
-list.append(card);
-});
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+const SUPABASE_URL = 'https://vjhicnvyjmafojwzouig.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_zI43V_w51Vaar7F0VOUWzQ_WKMDOcFH';
+const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+const $ = id => document.getElementById(id);
+let session = null;
+let authMode = 'login';
+let quests = [];
+
+const safeParse = (key, fallback) => {
+  try { return JSON.parse(localStorage.getItem(key)) ?? fallback; }
+  catch { return fallback; }
+};
+let profile = safeParse('mc_profile', { name: 'Гость архива' });
+let localQuests = safeParse('mc_quests', []);
+
+function initials(name) { return (name.trim()[0] || 'Г').toLocaleUpperCase('ru'); }
+function renderProfile() {
+  const name = profile.name || 'Гость архива';
+  $('profileDisplay').textContent = name;
+  $('avatar').textContent = initials(name);
+  $('displayName').value = name === 'Гость архива' ? '' : name;
 }
-$('profileForm').addEventListener('submit',e=>{e.preventDefault();const name=$('displayName').value.trim()||'Гость архива';profile.name=name;localStorage.setItem('mc_profile',JSON.stringify(profile));renderProfile();$('profileStatus').textContent='Профиль сохранён в этом браузере.'});
-$('questForm').addEventListener('submit',e=>{e.preventDefault();const title=$('questTitle').value.trim();if(!title)return;quests.unshift({title,genre:$('genre').value,difficulty:$('difficulty').value,duration:$('duration').value,format:$('format').value,description:$('description').value.trim(),createdAt:new Date().toISOString()});localStorage.setItem('mc_quests',JSON.stringify(quests));$('questForm').reset();$('questStatus').textContent='Черновик сохранён.';renderQuests()});
-renderProfile();renderQuests();
-})();
+function renderQuests() {
+  $('questCount').textContent = '· ' + quests.length;
+  const list = $('questList');
+  if (!quests.length) {
+    list.innerHTML = '<div class="empty">Пока здесь пусто. Создайте свой первый квест — он появится в этом разделе.</div>';
+    return;
+  }
+  list.replaceChildren();
+  quests.forEach(q => {
+    const card = document.createElement('article'); card.className = 'quest';
+    const head = document.createElement('div'); head.className = 'quest-head';
+    const title = document.createElement('div'); title.className = 'quest-title'; title.textContent = q.title;
+    const del = document.createElement('button'); del.className = 'delete'; del.type = 'button'; del.textContent = 'Удалить';
+    del.addEventListener('click', async () => {
+      if (session) {
+        const { error } = await supabase.from('quests').delete().eq('id', q.id).eq('user_id', session.user.id);
+        if (error) { $('questStatus').textContent = 'Не удалось удалить: ' + error.message; return; }
+      } else {
+        localQuests = localQuests.filter(x => x.id !== q.id);
+        localStorage.setItem('mc_quests', JSON.stringify(localQuests));
+      }
+      quests = quests.filter(x => x.id !== q.id);
+      renderQuests();
+      $('questStatus').textContent = 'Черновик удалён.';
+    });
+    head.append(title, del);
+    const meta = document.createElement('div'); meta.className = 'quest-meta';
+    meta.textContent = [q.genre, q.difficulty, q.duration, q.format].join(' · ');
+    card.append(head, meta);
+    if (q.description) { const desc = document.createElement('p'); desc.className = 'quest-desc'; desc.textContent = q.description; card.append(desc); }
+    list.append(card);
+  });
+}
+function showAuthState() {
+  $('authForm').hidden = !!session;
+  $('authActions').hidden = !!session;
+  $('signedIn').hidden = !session;
+  $('authIntro').hidden = !!session;
+  $('signedInText').textContent = session ? 'Вы вошли как ' + session.user.email + '. Черновики сохраняются в облаке.' : '';
+  $('authPanel').querySelector('h2').textContent = session ? 'Аккаунт подключён' : 'Аккаунт Mystery Club';
+}
+function setAuthMode(mode) {
+  authMode = mode;
+  $('nameField').hidden = mode !== 'signup';
+  $('authSubmit').textContent = mode === 'signup' ? 'Создать аккаунт' : 'Войти';
+  $('switchAuth').textContent = mode === 'signup' ? 'У меня уже есть аккаунт' : 'Создать аккаунт';
+  $('forgotPassword').hidden = mode === 'signup';
+}
+async function loadCloudData() {
+  const userId = session.user.id;
+  const displayName = session.user.user_metadata?.display_name || session.user.email?.split('@')[0] || 'Создатель';
+  const { data: profileRow, error: profileError } = await supabase.from('profiles')
+    .upsert({ id: userId, display_name: displayName, updated_at: new Date().toISOString() }, { onConflict: 'id', ignoreDuplicates: true })
+    .select('display_name').maybeSingle();
+  if (profileError) console.warn('Profile sync:', profileError.message);
+
+  const migrationKey = 'mc_migrated_' + userId;
+  if (!localStorage.getItem(migrationKey) && localQuests.length) {
+    const rows = localQuests.map(q => ({
+      user_id: userId, title: q.title, genre: q.genre, difficulty: q.difficulty,
+      duration: q.duration, format: q.format, description: q.description || ''
+    }));
+    const { error } = await supabase.from('quests').insert(rows);
+    if (!error) localStorage.setItem(migrationKey, 'yes');
+    else $('questStatus').textContent = 'Локальные черновики пока не перенесены: ' + error.message;
+  }
+  const { data, error } = await supabase.from('quests').select('*').eq('user_id', userId).order('created_at', { ascending: false });
+  if (error) { $('questStatus').textContent = 'Ошибка загрузки облачных черновиков: ' + error.message; return; }
+  quests = data || [];
+  const name = profileRow?.display_name || displayName;
+  profile = { name };
+  localStorage.setItem('mc_profile', JSON.stringify(profile));
+  renderProfile(); renderQuests();
+}
+async function applySession(nextSession) {
+  session = nextSession;
+  showAuthState();
+  if (session) {
+    await loadCloudData();
+  } else {
+    quests = localQuests;
+    renderProfile(); renderQuests();
+  }
+}
+
+$('authActions').hidden = false;
+setAuthMode('login');
+$('switchAuth').addEventListener('click', () => setAuthMode(authMode === 'login' ? 'signup' : 'login'));
+$('authForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  $('authStatus').textContent = 'Подключаем аккаунт…';
+  const email = $('authEmail').value.trim();
+  const password = $('authPassword').value;
+  let result;
+  if (authMode === 'signup') {
+    result = await supabase.auth.signUp({
+      email, password,
+      options: { data: { display_name: $('authName').value.trim() || email.split('@')[0] },
+        emailRedirectTo: window.location.href.split('#')[0] }
+    });
+    if (!result.error && !result.data.session) {
+      $('authStatus').textContent = 'Аккаунт создан. Проверьте почту и подтвердите адрес, затем войдите.';
+      return;
+    }
+  } else {
+    result = await supabase.auth.signInWithPassword({ email, password });
+  }
+  if (result.error) { $('authStatus').textContent = 'Не получилось: ' + result.error.message; return; }
+  $('authStatus').textContent = 'Аккаунт подключён.';
+  await applySession(result.data.session);
+});
+$('forgotPassword').addEventListener('click', async () => {
+  const email = $('authEmail').value.trim();
+  if (!email) { $('authStatus').textContent = 'Сначала укажите электронную почту.'; return; }
+  const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: window.location.href.split('#')[0] });
+  $('authStatus').textContent = error ? 'Ошибка: ' + error.message : 'Письмо для восстановления отправлено. Проверьте почту.';
+});
+$('signOut').addEventListener('click', async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) { $('authStatus').textContent = 'Ошибка выхода: ' + error.message; return; }
+  $('authStatus').textContent = 'Вы вышли из аккаунта.';
+  await applySession(null);
+});
+$('saveNewPassword').addEventListener('click', async () => {
+  const password = $('newPassword').value;
+  if (password.length < 8) { $('authStatus').textContent = 'Пароль должен содержать не менее 8 символов.'; return; }
+  const { error } = await supabase.auth.updateUser({ password });
+  $('authStatus').textContent = error ? 'Не удалось обновить пароль: ' + error.message : 'Пароль обновлён.';
+  if (!error) $('passwordResetBox').hidden = true;
+});
+supabase.auth.onAuthStateChange(async (event, newSession) => {
+  if (event === 'PASSWORD_RECOVERY') $('passwordResetBox').hidden = false;
+  if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') await applySession(newSession);
+});
+$('profileForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const name = $('displayName').value.trim() || 'Гость архива';
+  if (session) {
+    const { error } = await supabase.from('profiles').upsert({ id: session.user.id, display_name: name, updated_at: new Date().toISOString() });
+    if (error) { $('profileStatus').textContent = 'Не удалось сохранить: ' + error.message; return; }
+    await supabase.auth.updateUser({ data: { display_name: name } });
+  }
+  profile = { name }; localStorage.setItem('mc_profile', JSON.stringify(profile));
+  renderProfile();
+  $('profileStatus').textContent = session ? 'Профиль сохранён в облаке.' : 'Профиль сохранён в этом браузере. Войдите, чтобы синхронизировать его.';
+});
+$('questForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const title = $('questTitle').value.trim();
+  if (!title) return;
+  const item = {
+    title, genre: $('genre').value, difficulty: $('difficulty').value,
+    duration: $('duration').value, format: $('format').value,
+    description: $('description').value.trim()
+  };
+  if (session) {
+    const { data, error } = await supabase.from('quests').insert({ ...item, user_id: session.user.id }).select().single();
+    if (error) { $('questStatus').textContent = 'Не удалось сохранить в облако: ' + error.message; return; }
+    quests.unshift(data);
+    $('questStatus').textContent = 'Черновик сохранён в облаке.';
+  } else {
+    item.id = crypto.randomUUID();
+    localQuests.unshift(item); quests = localQuests;
+    localStorage.setItem('mc_quests', JSON.stringify(localQuests));
+    $('questStatus').textContent = 'Черновик сохранён в этом браузере. Войдите, чтобы хранить его в облаке.';
+  }
+  $('questForm').reset(); renderQuests();
+});
+const { data: sessionData } = await supabase.auth.getSession();
+await applySession(sessionData.session);
 </script>
 </body>
 </html>
