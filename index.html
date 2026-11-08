@@ -67,6 +67,8 @@
           <div class="case-bottom"><span class="duration">◷ Около 90–120 минут</span><a class="text-button" href="cases/vale-archive/">Открыть дело <span>↗</span></a></div>
         </div>
       </article>
+      <div class="community-heading" style="margin:42px 0 18px"><div class="eyebrow">РАССЛЕДОВАНИЯ СООБЩЕСТВА</div><h2>Работы авторов<span class="muted">.</span></h2><p style="color:var(--muted);font-size:13px;line-height:1.7">Здесь появятся квесты, опубликованные участниками Mystery Club.</p></div>
+      <div id="communityCases" class="community-cases"><div class="coming-card"><span class="coming-icon">…</span><div><strong>Загружаем открытые расследования</strong><p>Подождите немного.</p></div></div></div>
       <div class="coming-card">
         <span class="coming-icon">＋</span>
         <div><strong>Следующее дело готовится</strong><p>Новые истории будут появляться в архиве регулярно.</p></div>
@@ -86,6 +88,69 @@
   </main>
 
   <footer><a class="brand footer-brand" href="#"><span class="brand-mark">M<span>·</span></span><span class="brand-name">MYSTERY<span>CLUB</span></span></a><span>АРХИВ ИНТЕРАКТИВНЫХ РАССЛЕДОВАНИЙ</span><span>© 2026</span></footer>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    const client = createClient(
+      'https://vjhicnvyjmafojwzouig.supabase.co',
+      'sb_publishable_zI43V_w51Vaar7F0VOUWzQ_WKMDOcFH'
+    );
+    const root = document.getElementById('communityCases');
+    const { data, error } = await client.from('quests')
+      .select('id,title,genre,difficulty,duration,format,description,created_at')
+      .eq('is_published', true)
+      .order('created_at', { ascending: false });
+    if (error) {
+      root.textContent = 'Не удалось загрузить открытые расследования. Попробуйте обновить страницу.';
+    } else if (!data?.length) {
+      root.innerHTML = '<div class="coming-card"><span class="coming-icon">＋</span><div><strong>Пока нет опубликованных работ</strong><p>Станьте первым автором, который поделится своим расследованием.</p></div><span class="coming-label">ОЖИДАЕМ АВТОРОВ</span></div>';
+    } else {
+      root.replaceChildren();
+      data.forEach((quest, index) => {
+        const card = document.createElement('article');
+        card.className = 'case-card community-case';
+        const visual = document.createElement('div');
+        visual.className = 'case-visual';
+        const number = document.createElement('div');
+        number.className = 'case-number';
+        number.textContent = 'ДЕЛО СООБЩЕСТВА № ' + String(index + 1).padStart(2, '0');
+        const seal = document.createElement('div');
+        seal.className = 'case-seal';
+        seal.textContent = 'M';
+        const caption = document.createElement('div');
+        caption.className = 'case-visual-caption';
+        caption.textContent = 'MYSTERY CLUB';
+        visual.append(number, seal, caption);
+        const info = document.createElement('div');
+        info.className = 'case-info';
+        const meta = document.createElement('div');
+        meta.className = 'case-meta';
+        [quest.genre, 'СЛОЖНОСТЬ · ' + quest.difficulty].filter(Boolean).forEach(value => {
+          const tag = document.createElement('span');
+          tag.className = 'tag';
+          tag.textContent = value;
+          meta.append(tag);
+        });
+        const title = document.createElement('h3');
+        title.textContent = quest.title;
+        const description = document.createElement('p');
+        description.textContent = quest.description || 'Автор пока не добавил описание этого расследования.';
+        const bottom = document.createElement('div');
+        bottom.className = 'case-bottom';
+        const duration = document.createElement('span');
+        duration.className = 'duration';
+        duration.textContent = '◷ ' + (quest.duration || 'Длительность не указана');
+        const label = document.createElement('span');
+        label.className = 'text-button';
+        label.textContent = 'Скоро можно будет открыть дело';
+        bottom.append(duration, label);
+        info.append(meta, title, description, bottom);
+        card.append(visual, info);
+        root.append(card);
+      });
+    }
+  </script>
+
   <script src="script.js"></script>
 </body>
 </html>
